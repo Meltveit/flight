@@ -118,33 +118,69 @@ export function EligibilityForm() {
                                     <AlertCircle className="h-5 w-5 mr-3 mt-0.5" />
                                 )}
                                 <div>
-                                    <h3 className="font-semibold">
+                                    <h3 className="font-semibold text-lg">
                                         {result.eligible ? "You are Eligible!" : "Not Eligible"}
                                     </h3>
-                                    <p className="text-sm mt-1 opacity-90">{result.reason}</p>
+
+                                    {/* Flight Route Visual */}
+                                    <div className="flex items-center gap-3 mt-2 mb-3 text-slate-700 bg-white/50 p-2 rounded-lg">
+                                        <div className="flex flex-col">
+                                            <span className="text-xl font-bold">{result.departure?.iata}</span>
+                                            <span className="text-xs text-slate-500">Origin</span>
+                                        </div>
+                                        <div className="flex-1 flex flex-col items-center px-2">
+                                            <div className="h-[2px] w-full bg-slate-300 relative my-1">
+                                                <Plane className="h-3 w-3 absolute -top-[5px] left-1/2 -ml-1.5 text-slate-400 transform rotate-90" />
+                                            </div>
+                                            <span className="text-[10px] text-slate-400 text-center w-full">{result.distance} km</span>
+                                        </div>
+                                        <div className="flex flex-col text-right">
+                                            <span className="text-xl font-bold">{result.arrival?.iata}</span>
+                                            <span className="text-xs text-slate-500">Destination</span>
+                                        </div>
+                                    </div>
+
+                                    {/* Airline Info */}
+                                    {result.airline && (
+                                        <div className="mb-2 text-sm text-slate-800 font-medium flex items-center gap-2">
+                                            <div className="h-6 w-6 bg-slate-900 text-white rounded flex items-center justify-center text-xs font-bold">
+                                                {result.airline.iata || "AIR"}
+                                            </div>
+                                            {result.airline.name}
+                                        </div>
+                                    )}
+
+                                    <p className="text-sm opacity-90">{result.reason}</p>
+
                                     {result.delay && result.delay > 0 && (
-                                        <p className="text-sm mt-1 font-medium bg-white/20 inline-block px-2 py-0.5 rounded">
+                                        <p className="text-sm mt-1 font-medium bg-red-100 text-red-800 inline-block px-2 py-0.5 rounded border border-red-200">
                                             Delay: {Math.floor(result.delay / 60)}h {result.delay % 60}m
                                         </p>
                                     )}
+
                                     {result.eligible && (
-                                        <button
-                                            onClick={async () => {
-                                                try {
-                                                    const res = await axios.post("/api/checkout", {
-                                                        flightData: result
-                                                    });
-                                                    if (res.data.url) {
-                                                        window.location.href = res.data.url;
+                                        <div className="mt-4 pt-4 border-t border-green-200/50">
+                                            <p className="text-2xl font-bold text-green-700 mb-1">€{result.amount}</p>
+                                            <p className="text-xs text-green-800 mb-3">Estimated Compensation per Passenger</p>
+
+                                            <button
+                                                onClick={async () => {
+                                                    try {
+                                                        const res = await axios.post("/api/checkout", {
+                                                            flightData: result
+                                                        });
+                                                        if (res.data.url) {
+                                                            window.location.href = res.data.url;
+                                                        }
+                                                    } catch (e) {
+                                                        alert("Payment initialization failed. Please try again.");
                                                     }
-                                                } catch (e) {
-                                                    alert("Payment initialization failed. Please try again.");
-                                                }
-                                            }}
-                                            className="mt-3 text-sm font-semibold underline underline-offset-2 hover:opacity-80 text-blue-700"
-                                        >
-                                            Generate Claim Letter (Free) &rarr;
-                                        </button>
+                                                }}
+                                                className="w-full flex items-center justify-center py-3 bg-blue-700 text-white rounded-lg font-bold hover:bg-blue-800 transition-all shadow-md active:scale-95"
+                                            >
+                                                Claim Your €{result.amount} Now &rarr;
+                                            </button>
+                                        </div>
                                     )}
                                 </div>
                             </div>
