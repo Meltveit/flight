@@ -122,5 +122,13 @@ export async function GET(request: Request) {
     }
 
     const result = calculateCompensation(flightData);
-    return NextResponse.json(result);
+
+    // Merge result with original flight data so frontend has details for checkout
+    return NextResponse.json({
+        ...result,
+        airline: flightData.airline,
+        departure: flightData.departure,
+        arrival: flightData.arrival,
+        flight_status: flightData.flight_status
+    });
 }
