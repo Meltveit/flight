@@ -3,12 +3,12 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // Enhanced Database of Airline Contacts (Emails or Form URLs)
 const AIRLINE_CONTACTS: Record<string, string> = {
-    // Major European
+    // === Major EU/UK Airlines (Liable for ALL flights) ===
     "DY": "claims@norwegian.com", // Norwegian
     "SK": "claims@sas.no", // SAS
     "LH": "customer.relations@lufthansa.com", // Lufthansa
     "BA": "claims@ba.com", // British Airways
-    "FR": "https://onlineform.ryanair.com/ie/en/contact-us-eu261", // Ryanair (Strictly form only)
+    "FR": "https://onlineform.ryanair.com/ie/en/contact-us-eu261", // Ryanair
     "AF": "mail.refund.service@airfrance.fr", // Air France
     "KL": "claims@klm.com", // KLM
     "EW": "service@eurowings.com", // Eurowings
@@ -19,19 +19,22 @@ const AIRLINE_CONTACTS: Record<string, string> = {
     "AY": "customer.relations@finnair.com", // Finnair
     "AZ": "customer.relations@ita-airways.com", // ITA
     "EI": "central.baggage.tracing@aerlingus.com", // Aer Lingus
-
-    // Low Cost / Others
     "U2": "https://www.easyjet.com/en/claim/EU261", // EasyJet
     "W6": "https://wizzair.com/en-gb/information-and-services/compliments-and-complaints/", // Wizz Air
     "VY": "contact@vueling.com", // Vueling
     "HV": "service-center@transavia.com", // Transavia
     "LS": "customer.relations@jet2.com", // Jet2
     "BT": "info@airbaltic.com", // AirBaltic
+    "VS": "EU261.Claims@fly.virgin.com", // Virgin Atlantic
 
-    // US (for flights departing EU)
+    // === Non-EU Airlines (Liable ONLY for flights departing EU/UK) ===
+    // We keep these because users might fly e.g. LHR -> JFK on Delta
     "DL": "https://www.delta.com/us/en/need-help/overview", // Delta
     "UA": "https://www.united.com/en/us/customercare", // United
     "AA": "https://www.aa.com/contact/forms?topic=CR", // American
+    "AC": "https://accc-prod.microsoftcrmportals.com/en-CA/flight-delay-or-cancellation-claim/", // Air Canada
+    "EK": "https://www.emirates.com/english/help/forms/complaint/", // Emirates
+    "QR": "https://www.qatarairways.com/en/legal/eu-air-passenger-rights.html", // Qatar Airways (Form)
 
     // Default Fallback
     "DEFAULT": "claims@airline.com"
