@@ -127,6 +127,11 @@ export function EligibilityForm() {
                                         <div className="flex flex-col">
                                             <span className="text-xl font-bold">{result.departure?.iata}</span>
                                             <span className="text-xs text-slate-500">Origin</span>
+                                            {result.departure?.scheduled && (
+                                                <span className="text-xs font-mono mt-1 text-slate-400">
+                                                    {new Date(result.departure.scheduled).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
+                                                </span>
+                                            )}
                                         </div>
                                         <div className="flex-1 flex flex-col items-center px-2">
                                             <div className="h-[2px] w-full bg-slate-300 relative my-1">
@@ -137,6 +142,11 @@ export function EligibilityForm() {
                                         <div className="flex flex-col text-right">
                                             <span className="text-xl font-bold">{result.arrival?.iata}</span>
                                             <span className="text-xs text-slate-500">Destination</span>
+                                            {result.arrival?.scheduled && (
+                                                <span className="text-xs font-mono mt-1 text-slate-400">
+                                                    {new Date(result.arrival.scheduled).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
+                                                </span>
+                                            )}
                                         </div>
                                     </div>
 
