@@ -54,11 +54,11 @@ export async function POST(req: Request) {
                 },
             ],
             mode: "payment",
-            success_url: `${baseUrl}/result?session_id={CHECKOUT_SESSION_ID}&flight_code=${flightData?.airline?.iata || "FL"}${flightData?.departure?.iata || "DEP"}${flightData?.arrival?.iata || "ARR"}`,
+            success_url: `${baseUrl}/result?session_id={CHECKOUT_SESSION_ID}&flight_number=${flightData?.flight_iata || "Flight"}&flight_code=${flightData?.airline?.iata || "FL"}${flightData?.departure?.iata || "DEP"}${flightData?.arrival?.iata || "ARR"}`,
             cancel_url: `${baseUrl}/`,
             metadata: {
                 // Store small amount of data to retrieve on success
-                flight_number: flightData?.departure?.iata + "->" + flightData?.arrival?.iata,
+                flight_number: flightData?.flight_iata || (flightData?.departure?.iata + "->" + flightData?.arrival?.iata),
                 // Real app should save to DB here with a pending status and passing ID
             },
         });

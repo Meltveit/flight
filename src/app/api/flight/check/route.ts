@@ -41,6 +41,7 @@ export async function GET(request: Request) {
             }
 
             flightData = {
+                flight_iata: data.flight.iata || flightNumber,
                 departure: {
                     iata: data.departure.iata,
                     latitude: 0,
@@ -86,6 +87,7 @@ export async function GET(request: Request) {
         const isEligibleMock = flightNumber.toUpperCase().endsWith("OK") || flightNumber.toUpperCase() === "DY123";
 
         flightData = {
+            flight_iata: flightNumber.toUpperCase(),
             departure: {
                 iata: "OSL",
                 latitude: 59.9139,

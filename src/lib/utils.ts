@@ -8,6 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 // EU 261/2004 Compensation Logic
 
 export interface FlightData {
+    flight_iata: string; // e.g. "DY123"
     departure: {
         iata: string;
         latitude: number;
