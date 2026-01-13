@@ -13,6 +13,7 @@ export interface FlightData {
         latitude: number;
         longitude: number;
         country_iso2: string; // e.g. "DE", "FR", "GB" (GB is treated as EU equivalent for UK261)
+        scheduled?: string; // Optional ISO string for visual display
     };
     arrival: {
         iata: string;

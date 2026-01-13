@@ -46,6 +46,7 @@ export async function GET(request: Request) {
                     latitude: 0,
                     longitude: 0,
                     country_iso2: "DE", // Default/Mock for MVP if missing
+                    scheduled: data.departure.scheduled,
                 },
                 arrival: {
                     iata: data.arrival.iata,
@@ -119,6 +120,10 @@ export async function GET(request: Request) {
             flightData.arrival.scheduled = scheduled.toISOString();
             flightData.arrival.actual = actual.toISOString();
         }
+
+        // Mock departure time (e.g. 2 hours flight duration)
+        const depTime = new Date(scheduled.getTime() - 2 * 60 * 60 * 1000);
+        flightData.departure.scheduled = depTime.toISOString();
     }
 
     const result = calculateCompensation(flightData);
