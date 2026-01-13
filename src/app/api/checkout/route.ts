@@ -37,6 +37,12 @@ export async function POST(req: Request) {
         };
     }
 
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+        ? process.env.NEXT_PUBLIC_BASE_URL
+        : process.env.VERCEL_URL
+            ? `https://${process.env.VERCEL_URL}`
+            : "http://localhost:3000";
+
     try {
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ["card"],
@@ -47,8 +53,8 @@ export async function POST(req: Request) {
                 },
             ],
             mode: "payment",
-            success_url: `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/result?session_id={CHECKOUT_SESSION_ID}&flight_code=${flightData?.airline?.iata || "FL"}${flightData?.departure?.iata || "DEP"}${flightData?.arrival?.iata || "ARR"}`,
-            cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/`,
+            success_url: `${baseUrl}/result?session_id={CHECKOUT_SESSION_ID}&flight_code=${flightData?.airline?.iata || "FL"}${flightData?.departure?.iata || "DEP"}${flightData?.arrival?.iata || "ARR"}`,
+            cancel_url: `${baseUrl}/`,
             metadata: {
                 // Store small amount of data to retrieve on success
                 flight_number: flightData?.departure?.iata + "->" + flightData?.arrival?.iata,
