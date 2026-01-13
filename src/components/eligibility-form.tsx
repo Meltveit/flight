@@ -130,7 +130,7 @@ export function EligibilityForm() {
                                                         flightData: result
                                                     });
                                                     if (res.data.url) {
-                                                        window.navigation?.assign ? window.navigation.assign(res.data.url) : (window.location.href = res.data.url);
+                                                        window.location.href = res.data.url;
                                                     }
                                                 } catch (e) {
                                                     alert("Payment initialization failed. Please try again.");

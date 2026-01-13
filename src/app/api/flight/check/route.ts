@@ -95,7 +95,9 @@ export async function GET(request: Request) {
                 iata: "LHR",
                 latitude: 51.4700,
                 longitude: -0.4543,
-                country_iso2: "GB"
+                country_iso2: "GB",
+                scheduled: "",
+                actual: ""
             },
             flight_status: "landed",
             airline: {
