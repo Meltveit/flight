@@ -143,7 +143,7 @@ export function EligibilityForm() {
                                             }}
                                             className="mt-3 text-sm font-semibold underline underline-offset-2 hover:opacity-80 text-blue-700"
                                         >
-                                            Proceed to Claim (€2.99)
+                                            Generate Claim Letter (Free) &rarr;
                                         </button>
                                     )}
                                 </div>

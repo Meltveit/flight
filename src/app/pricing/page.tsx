@@ -60,11 +60,11 @@ export default function PricingPage() {
 
                     {/* Our Card */}
                     <div className="bg-white rounded-2xl p-8 border-2 border-blue-600 shadow-xl relative overflow-hidden transform md:scale-105">
-                        <div className="absolute top-0 right-0 bg-yellow-400 text-blue-900 text-xs font-bold px-3 py-1 rounded-bl-lg uppercase tracking-wider">
-                            Best Value
+                        <div className="absolute top-0 right-0 bg-green-400 text-blue-900 text-xs font-bold px-3 py-1 rounded-bl-lg uppercase tracking-wider">
+                            Limited Offer
                         </div>
                         <h3 className="text-xl font-bold text-blue-900 mb-2">FlightRefund DIY</h3>
-                        <div className="text-5xl font-extrabold text-blue-700 mb-6">€2.99 <span className="text-sm font-normal text-slate-500">flat fee</span></div>
+                        <div className="text-5xl font-extrabold text-blue-700 mb-6">Free <span className="text-sm font-normal text-slate-500 line-through">€2.99</span></div>
 
                         <ul className="space-y-4 mb-8">
                             <li className="flex items-start text-slate-700">
@@ -106,12 +106,12 @@ export default function PricingPage() {
                         <div className="text-2xl font-bold text-slate-300">-</div>
                         <div className="bg-white px-6 py-3 rounded-lg border border-blue-100 shadow-sm">
                             <span className="block text-xs text-slate-400 uppercase">DIY Fee</span>
-                            <span className="text-xl font-bold text-blue-600">€2.99</span>
+                            <span className="text-xl font-bold text-blue-600">€0.00</span>
                         </div>
                         <div className="text-2xl font-bold text-slate-300">=</div>
                         <div className="bg-green-100 px-6 py-3 rounded-lg border border-green-200 shadow-sm">
                             <span className="block text-xs text-green-600 uppercase">You Keep</span>
-                            <span className="text-xl font-bold text-green-700">€597.01</span>
+                            <span className="text-xl font-bold text-green-700">€600.00</span>
                         </div>
                     </div>
                 </div>

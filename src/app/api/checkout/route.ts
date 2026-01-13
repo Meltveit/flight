@@ -23,9 +23,10 @@ export async function POST(req: Request) {
     const productId = process.env.STRIPE_PRODUCT_ID;
 
     // Construct line item
+    // Construct line item
     const price_data: any = {
         currency: "eur",
-        unit_amount: 299,
+        unit_amount: 0, // Free
     };
 
     if (productId) {
@@ -45,7 +46,7 @@ export async function POST(req: Request) {
 
     try {
         const session = await stripe.checkout.sessions.create({
-            payment_method_types: ["card"],
+            // payment_method_types: ["card"], // Omitted for free sessions to avoid validation errors
             line_items: [
                 {
                     price_data,
