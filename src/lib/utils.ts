@@ -53,8 +53,8 @@ function deg2rad(deg: number): number {
 }
 
 export function calculateCompensation(flight: FlightData) {
-    if (flight.flight_status !== "active" && flight.flight_status !== "landed" && flight.flight_status !== "cancelled") {
-        return { eligible: false, reason: "Flight status must be landed or cancelled to claim." };
+    if (flight.flight_status !== "active" && flight.flight_status !== "landed" && flight.flight_status !== "cancelled" && flight.flight_status !== "scheduled") {
+        return { eligible: false, reason: "Flight status must be landed, cancelled, or confirmed delayed." };
     }
 
     // 1. Calculate Delay

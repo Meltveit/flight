@@ -20,19 +20,29 @@ export async function POST(req: Request) {
         });
     }
 
+    const productId = process.env.STRIPE_PRODUCT_ID;
+
+    // Construct line item
+    const price_data: any = {
+        currency: "eur",
+        unit_amount: 299,
+    };
+
+    if (productId) {
+        price_data.product = productId;
+    } else {
+        price_data.product_data = {
+            name: "Flight Claim Legal Letter",
+            description: `Professional legal document for ${flightData?.airline?.name || "Flight"} delay.`,
+        };
+    }
+
     try {
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ["card"],
             line_items: [
                 {
-                    price_data: {
-                        currency: "eur",
-                        product_data: {
-                            name: "Flight Claim Legal Letter",
-                            description: `Professional legal document for ${flightData?.airline?.name || "Flight"} delay.`,
-                        },
-                        unit_amount: 299, // cents -> €2.99
-                    },
+                    price_data,
                     quantity: 1,
                 },
             ],
