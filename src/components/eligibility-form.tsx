@@ -122,6 +122,11 @@ export function EligibilityForm() {
                                         {result.eligible ? "You are Eligible!" : "Not Eligible"}
                                     </h3>
                                     <p className="text-sm mt-1 opacity-90">{result.reason}</p>
+                                    {result.delay && result.delay > 0 && (
+                                        <p className="text-sm mt-1 font-medium bg-white/20 inline-block px-2 py-0.5 rounded">
+                                            Delay: {Math.floor(result.delay / 60)}h {result.delay % 60}m
+                                        </p>
+                                    )}
                                     {result.eligible && (
                                         <button
                                             onClick={async () => {
