@@ -54,12 +54,12 @@ export async function POST(req: Request) {
                 },
             ],
             mode: "payment",
-            success_url: `${baseUrl}/result?session_id={CHECKOUT_SESSION_ID}&flight_number=${flightData?.flight_iata || "Flight"}&flight_code=${flightData?.airline?.iata || "FL"}${flightData?.departure?.iata || "DEP"}${flightData?.arrival?.iata || "ARR"}`,
+            success_url: `${baseUrl}/result?session_id={CHECKOUT_SESSION_ID}&flight_number=${flightData?.flight_iata || "FK000"}&date=${flightData?.arrival?.scheduled?.split("T")[0] || ""}&origin=${flightData?.departure?.iata || "ORG"}&destination=${flightData?.arrival?.iata || "DES"}&scheduled_arr=${flightData?.arrival?.scheduled || ""}&actual_arr=${flightData?.arrival?.actual || ""}&amount=${price_data.unit_amount === 0 ? "600" : "600"}`,
             cancel_url: `${baseUrl}/`,
             metadata: {
-                // Store small amount of data to retrieve on success
-                flight_number: flightData?.flight_iata || (flightData?.departure?.iata + "->" + flightData?.arrival?.iata),
-                // Real app should save to DB here with a pending status and passing ID
+                flight_number: flightData?.flight_iata,
+                origin: flightData?.departure?.iata,
+                destination: flightData?.arrival?.iata
             },
         });
 

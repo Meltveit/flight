@@ -80,7 +80,7 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
     }
 
-    const { flightCode, flightNumber, date, amount } = body;
+    const { flightCode, flightNumber, date, amount, origin, destination, scheduledArr, actualArr } = body;
     // flightCode is mostly used for Airline ID derivation in current flow (e.g. VSAMSMSP)
     // flightNumber is the actual flight IATA (e.g. VS3947) - we need to ensure this is passed!
 
@@ -96,18 +96,20 @@ export async function POST(req: Request) {
     const displayFlight = flightNumber || flightCode || "FLIGHT";
     const displayAmount = amount || "600";
 
+    const formatTime = (isoString: string) => isoString ? new Date(isoString).toLocaleString() : "[Time]";
+
     // Fallback Function
     const generateStaticLetter = () => {
         return STATIC_TEMPLATE
             .replace("[AIRLINE_CONTACT]", airlineContact)
             .replace("[FLIGHT_NUMBER]", displayFlight)
             .replace("[FLIGHT_NUMBER]", displayFlight) // Replace second occurrence
-            .replace("[DATE]", date || "[Date]")
+            .replace("[DATE]", date ? new Date(date).toLocaleDateString() : "[Date]")
             .replace("[AMOUNT]", displayAmount)
-            .replace("[ORIGIN]", "[Origin Airport]") // We could pass these too
-            .replace("[DESTINATION]", "[Destination Airport]")
-            .replace("[SCHEDULED_ARR]", "[Scheduled Time]")
-            .replace("[ACTUAL_ARR]", "[Actual Time]");
+            .replace("[ORIGIN]", origin || "[Origin Airport]")
+            .replace("[DESTINATION]", destination || "[Destination Airport]")
+            .replace("[SCHEDULED_ARR]", formatTime(scheduledArr) || "[Scheduled Time]")
+            .replace("[ACTUAL_ARR]", formatTime(actualArr) || "[Actual Time]");
     };
 
     // Try AI Generation
@@ -119,10 +121,14 @@ export async function POST(req: Request) {
             const prompt = `You are a professional aviation lawyer. Write a formal legal claim letter for flight delay compensation citing Regulation EC 261/2004. 
             Airline Code: ${airlineIata}. 
             Flight Number: ${displayFlight}.
+            Date: ${date}.
+            Route: ${origin}.
+            Scheduled Arrival: ${formatTime(scheduledArr)}.
+            Actual Arrival: ${formatTime(actualArr)}.
             Compensation Amount: €${displayAmount}. 
             Keep it professional, firm, and concise. 
             Address it to the claims department. 
-            Include placeholders for [Your Name], [Address], [Date], [IBAN], [Origin], [Destination] if you don't have exact data.
+            Include placeholders for [Your Name], [Address] and [IBAN] only. Fill in all other flight details provided above.
             Return ONLY the letter text, no preamble.`;
 
             const result = await model.generateContent(prompt);

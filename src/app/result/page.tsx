@@ -35,12 +35,26 @@ function ResultContent() {
                 // Note: This is insecure for production (user can skip payment), 
                 // but acceptable for MVP demo flow.
 
-                const flightCode = searchParams.get("flight_code") || (mockPayment ? searchParams.get("flight") : null);
+                const flightCode = searchParams.get("flight_code") || null;
+                const flightNumber = searchParams.get("flight_number");
+                const date = searchParams.get("date");
+                const origin = searchParams.get("origin");
+                const destination = searchParams.get("destination");
+                const scheduledArr = searchParams.get("scheduled_arr");
+                const actualArr = searchParams.get("actual_arr");
+                const amount = searchParams.get("amount");
 
                 const res = await axios.post("/api/generate-letter", {
                     sessionId,
                     mockPayment,
-                    flightCode
+                    flightCode,
+                    flightNumber,
+                    date,
+                    origin, // New
+                    destination, // New
+                    scheduledArr, // New
+                    actualArr, // New
+                    amount
                 });
 
                 setLetter(res.data.letter);
@@ -117,6 +131,14 @@ function ResultContent() {
                         <Download className="h-4 w-4" />
                         Download as PDF
                     </button>
+
+                    <a
+                        href={`mailto:${airlineEmail}?subject=Compensation Claim - ${searchParams.get("flight_number") || "Flight Delay"}&body=${encodeURIComponent(letter)}`}
+                        className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/20"
+                    >
+                        <Mail className="h-4 w-4" />
+                        Open in Email App
+                    </a>
 
                     <div className="text-xs text-slate-400 text-center px-4">
                         Wait 14 days for a response. If they deny, reply attaching our "Rejection Rebuttal" (contact support).
