@@ -54,7 +54,7 @@ export async function POST(req: Request) {
                 },
             ],
             mode: "payment",
-            success_url: `${baseUrl}/result?session_id={CHECKOUT_SESSION_ID}&flight_number=${flightData?.flight_iata || "FK000"}&date=${flightData?.arrival?.scheduled?.split("T")[0] || ""}&origin=${flightData?.departure?.iata || "ORG"}&destination=${flightData?.arrival?.iata || "DES"}&scheduled_arr=${flightData?.arrival?.scheduled || ""}&actual_arr=${flightData?.arrival?.actual || ""}&amount=${price_data.unit_amount === 0 ? "600" : "600"}`,
+            success_url: `${baseUrl}/result?session_id={CHECKOUT_SESSION_ID}&flight_number=${flightData?.flight_iata || "FK000"}&date=${encodeURIComponent(flightData?.arrival?.scheduled?.split("T")[0] || "")}&origin=${flightData?.departure?.iata || "ORG"}&destination=${flightData?.arrival?.iata || "DES"}&scheduled_arr=${encodeURIComponent(flightData?.arrival?.scheduled || "")}&actual_arr=${encodeURIComponent(flightData?.arrival?.actual || "")}&amount=${price_data.unit_amount === 0 ? "600" : "600"}`,
             cancel_url: `${baseUrl}/`,
             metadata: {
                 flight_number: flightData?.flight_iata,

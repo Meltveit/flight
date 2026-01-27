@@ -25,7 +25,7 @@ const AIRLINE_CONTACTS: Record<string, string> = {
     "HV": "service-center@transavia.com", // Transavia
     "LS": "customer.relations@jet2.com", // Jet2
     "BT": "info@airbaltic.com", // AirBaltic
-    "VS": "EU261.Claims@fly.virgin.com", // Virgin Atlantic
+    "VS": "customer.relations@fly.virgin.com", // Virgin Atlantic (or use online form)
 
     // === Non-EU Airlines (Liable ONLY for flights departing EU/UK) ===
     // We keep these because users might fly e.g. LHR -> JFK on Delta
@@ -96,7 +96,16 @@ export async function POST(req: Request) {
     const displayFlight = flightNumber || flightCode || "FLIGHT";
     const displayAmount = amount || "600";
 
-    const formatTime = (isoString: string) => isoString ? new Date(isoString).toLocaleString() : "[Time]";
+    const formatTime = (isoString: string) => {
+        if (!isoString || isoString === "undefined" || isoString === "null") return "[Time]";
+        try {
+            const d = new Date(isoString);
+            if (isNaN(d.getTime())) return "[Time]"; // Invalid Date check
+            return d.toLocaleString([], { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+        } catch (e) {
+            return "[Time]";
+        }
+    };
 
     // Fallback Function
     const generateStaticLetter = () => {
