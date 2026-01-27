@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 
 export function EligibilityForm() {
     const [flightNumber, setFlightNumber] = useState("");
-    const [date, setDate] = useState("");
+    const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
     const [loading, setLoading] = useState(false);
     const [result, setResult] = useState<any>(null); // Replace with proper type later
 
@@ -124,7 +124,7 @@ export function EligibilityForm() {
 
                                     {/* Flight Route Visual */}
                                     <div className="flex items-center gap-3 mt-2 mb-3 text-slate-700 bg-white/50 p-2 rounded-lg">
-                                        <div className="flex flex-col">
+                                        <div className="flex flex-col items-center">
                                             <span className="text-xl font-bold">{result.departure?.iata}</span>
                                             <span className="text-xs text-slate-500">Origin</span>
                                             {result.departure?.scheduled && (
@@ -139,7 +139,7 @@ export function EligibilityForm() {
                                             </div>
                                             <span className="text-[10px] text-slate-400 text-center w-full">{result.distance} km</span>
                                         </div>
-                                        <div className="flex flex-col text-right">
+                                        <div className="flex flex-col items-center text-right">
                                             <span className="text-xl font-bold">{result.arrival?.iata}</span>
                                             <span className="text-xs text-slate-500">Destination</span>
                                             {result.arrival?.scheduled && (

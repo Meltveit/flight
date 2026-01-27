@@ -133,6 +133,7 @@ export async function GET(request: Request) {
     // Merge result with original flight data so frontend has details for checkout
     return NextResponse.json({
         ...result,
+        flight_iata: flightData.flight_iata,
         airline: flightData.airline,
         departure: flightData.departure,
         arrival: flightData.arrival,
