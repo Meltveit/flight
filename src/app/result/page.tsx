@@ -153,10 +153,12 @@ export default function ResultPage() {
     return (
         <div className="min-h-screen bg-slate-50">
             <header className="border-b bg-white py-4 px-6 md:px-12 flex items-center gap-2 shadow-sm">
-                <div className="h-8 w-8 bg-blue-700 rounded-lg flex items-center justify-center text-white font-bold text-xl leading-none">
-                    F
-                </div>
-                <span className="text-xl font-bold tracking-tight text-slate-900">FlightRefund<span className="text-blue-700">DIY</span></span>
+                <a href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                    <div className="h-8 w-8 bg-blue-700 rounded-lg flex items-center justify-center text-white font-bold text-xl leading-none">
+                        F
+                    </div>
+                    <span className="text-xl font-bold tracking-tight text-slate-900">FlightRefund<span className="text-blue-700">DIY</span></span>
+                </a>
             </header>
             <Suspense fallback={<div>Loading...</div>}>
                 <ResultContent />
