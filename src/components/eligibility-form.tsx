@@ -106,24 +106,24 @@ export function EligibilityForm() {
                         >
                             <div
                                 className={cn(
-                                    "p-4 rounded-xl border flex items-start",
+                                    "p-5 rounded-xl border flex flex-col items-center",
                                     result.eligible
                                         ? "bg-green-50 border-green-200 text-green-800"
                                         : "bg-red-50 border-red-200 text-red-800"
                                 )}
                             >
                                 {result.eligible ? (
-                                    <CheckCircle2 className="h-5 w-5 mr-3 mt-0.5" />
+                                    <CheckCircle2 className="h-8 w-8 mb-2 text-green-600" />
                                 ) : (
-                                    <AlertCircle className="h-5 w-5 mr-3 mt-0.5" />
+                                    <AlertCircle className="h-8 w-8 mb-2 text-red-600" />
                                 )}
-                                <div>
-                                    <h3 className="font-semibold text-lg">
+                                <div className="w-full">
+                                    <h3 className="font-semibold text-lg text-center mb-2">
                                         {result.eligible ? "You are Eligible!" : "Not Eligible"}
                                     </h3>
 
                                     {/* Flight Route Visual */}
-                                    <div className="flex items-center gap-3 mt-2 mb-3 text-slate-700 bg-white/50 p-2 rounded-lg">
+                                    <div className="flex items-center gap-3 mt-2 mb-4 text-slate-700 bg-white/50 p-2 rounded-lg w-full">
                                         <div className="flex flex-col items-center">
                                             <span className="text-xl font-bold">{result.departure?.iata}</span>
                                             <span className="text-xs text-slate-500">Origin</span>
@@ -152,7 +152,7 @@ export function EligibilityForm() {
 
                                     {/* Airline Info */}
                                     {result.airline && (
-                                        <div className="mb-2 text-sm text-slate-800 font-medium flex items-center gap-2">
+                                        <div className="mb-3 text-sm text-slate-800 font-medium flex items-center justify-center gap-2">
                                             <div className="h-6 w-6 bg-slate-900 text-white rounded flex items-center justify-center text-xs font-bold">
                                                 {result.airline.iata || "AIR"}
                                             </div>
@@ -160,18 +160,20 @@ export function EligibilityForm() {
                                         </div>
                                     )}
 
-                                    <p className="text-sm opacity-90">{result.reason}</p>
+                                    <div className="flex flex-col items-center gap-1">
+                                        <p className="text-sm opacity-90 text-center">{result.reason}</p>
 
-                                    {result.delay && result.delay > 0 && (
-                                        <p className="text-sm mt-1 font-medium bg-red-100 text-red-800 inline-block px-2 py-0.5 rounded border border-red-200">
-                                            Delay: {Math.floor(result.delay / 60)}h {result.delay % 60}m
-                                        </p>
-                                    )}
+                                        {result.delay && result.delay > 0 && (
+                                            <p className="text-sm font-medium bg-red-100 text-red-800 inline-block px-3 py-1 rounded-full border border-red-200">
+                                                Delay: {Math.floor(result.delay / 60)}h {result.delay % 60}m
+                                            </p>
+                                        )}
+                                    </div>
 
                                     {result.eligible && (
-                                        <div className="mt-4 pt-4 border-t border-green-200/50">
-                                            <p className="text-2xl font-bold text-green-700 mb-1">€{result.amount}</p>
-                                            <p className="text-xs text-green-800 mb-3">Estimated Compensation per Passenger</p>
+                                        <div className="mt-4 pt-4 border-t border-green-200/50 w-full text-center">
+                                            <p className="text-3xl font-bold text-green-700 mb-1">€{result.amount}</p>
+                                            <p className="text-xs text-green-800 mb-4 uppercase tracking-wide font-semibold opacity-70">Estimated Compensation</p>
 
                                             <button
                                                 onClick={async () => {
@@ -186,7 +188,7 @@ export function EligibilityForm() {
                                                         alert("Payment initialization failed. Please try again.");
                                                     }
                                                 }}
-                                                className="w-full flex items-center justify-center py-3 bg-blue-700 text-white rounded-lg font-bold hover:bg-blue-800 transition-all shadow-md active:scale-95"
+                                                className="w-full flex items-center justify-center py-3.5 bg-blue-700 text-white rounded-xl font-bold hover:bg-blue-800 transition-all shadow-lg active:scale-95"
                                             >
                                                 Claim Your €{result.amount} Now &rarr;
                                             </button>
